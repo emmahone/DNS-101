@@ -44,6 +44,28 @@ sequenceDiagram
     Web_Server->>Client: Response with content
 ```
 
+# What does a DNS lookup look like in a packet capture?
+A packet capture for a DNS lookup typically contains several packets exchanged between the DNS client and server. Here is an example of what a packet capture might look like using Wireshark:
+```
+No.     Time           Source                Destination           Protocol  Length   Info
+1       0.000000000    192.168.0.10          8.8.8.8               DNS       68       Standard query 0xf040 A example.com
+
+2       0.001234567    8.8.8.8               192.168.0.10          DNS       114      Standard query response 0xf040 A example.com A 93.184.216.34
+```
+In this example, the DNS client at IP address 192.168.0.10 is performing a DNS lookup for the domain name "example.com" by sending a DNS query packet to the Google Public DNS server at IP address 8.8.8.8. The DNS query packet contains the following information:
+
+- Query ID: 0xf040
+- Query Type: A (IPv4 address)
+- Query Name: example.com
+
+The DNS server responds with a DNS response packet that contains the following information:
+- Query ID: 0xf040
+- Response Type: Standard Query Response
+- Response Code: No Error
+- Answer Section: One resource record for "example.com" containing an IPv4 address (93.184.216.34)
+
+This packet capture demonstrates the basic exchange between a DNS client and server during a DNS lookup. The client sends a query packet requesting information about a specific domain name, and the server responds with a response packet containing the requested information (in this case, an IPv4 address).
+
 # Top Level Domain
 A top-level domain (TLD) is the last segment of a domain name in the hierarchical Domain Name System (DNS) of the internet. It is the part of the domain name that follows the last dot, such as ".com", ".org", ".net", and so on.
 
