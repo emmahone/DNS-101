@@ -190,6 +190,6 @@ In the example above, we are entering a domain into a webbrowser on a musl based
 
 "musl-libc provides no facility for TCP based requests and responses. In the case of certain resolvers, such as AWS’ EC2 local segment DNS, responses longer than a single 512 byte UDP packet - DNS’ archaic standard - get flagged as truncated, and may not contain a single A record."
 
-Source: https://www.linkedin.com/pulse/musl-libc-alpines-greatest-weakness-rogan-lynch/
+[Source](https://www.linkedin.com/pulse/musl-libc-alpines-greatest-weakness-rogan-lynch/)
 
 This limitation of musl-libc is discussed in depth upstream and there has been work from the musl-libc maintainer to support TCP based requests. That code can be found [here](https://git.musl-libc.org/cgit/musl/commit/?id=51d4669fb97782f6a66606da852b5afd49a08001) and should be implemented in musl-libc `1.2.4`.
