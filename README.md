@@ -135,12 +135,12 @@ For example, if the ndots option is set to 2, the DNS resolver will consider a d
 
 The ndots option can be used to prevent the DNS resolver from performing unnecessary domain searches and lookups for non-fully qualified domain names. By setting ndots to a value appropriate for the organization's domain naming conventions, the DNS resolver can more efficiently and accurately resolve domain names to IP addresses.
 
-# glibc vs musl
-Both glibc and musl are C libraries used in Linux-based operating systems. The main difference between them when it comes to DNS lookup is the implementation of the DNS resolver.
+# glibc vs musl-libc
+Both glibc and musl-libc are C libraries used in Linux-based operating systems. The main difference between them when it comes to DNS lookup is the implementation of the DNS resolver.
 
 In glibc, the DNS resolver is implemented using a daemon called "nscd" (Name Service Caching Daemon). When a DNS lookup is requested, the nscd daemon first checks its cache for the result. If the result is not found in the cache, it queries the DNS server specified in the /etc/resolv.conf file. The result is then cached for future use.
 
-In musl, on the other hand, the DNS resolver is implemented as a static library linked into the application. When a DNS lookup is requested, the library queries the DNS server specified in the /etc/resolv.conf file directly, without using a caching daemon. This means that musl clients do not have a caching mechanism, and each DNS lookup results in a separate query to the DNS server.
+In musl-libc, on the other hand, the DNS resolver is implemented as a static library linked into the application. When a DNS lookup is requested, the library queries the DNS server specified in the /etc/resolv.conf file directly, without using a caching daemon. This means that musl clients do not have a caching mechanism, and each DNS lookup results in a separate query to the DNS server.
 
 Overall, the main difference between glibc and musl when it comes to DNS lookup is the caching mechanism. Glibc clients use a caching daemon to speed up subsequent DNS lookups, while musl clients do not cache results and query the DNS server directly each time.
 
@@ -168,7 +168,7 @@ In the example above, we are entering a domain into a webbrowser on a glibc base
 8. The result is cached by the nscd daemon for future use.
 9. The result is returned to the glibc library, which in turn returns it to the web browser.
 
-# Example musl client
+# Example musl-libc client
 ```mermaid
 graph TD;
     A(Web browser)-->B(Library call);
@@ -185,3 +185,11 @@ In the example above, we are entering a domain into a webbrowser on a musl based
 4. The musl library sends a DNS request directly to the DNS server specified in the /etc/resolv.conf file.
 5. The DNS server responds with the IP address associated with the domain name.
 6. The result is returned to the musl library, which in turn returns it to the web browser.
+
+# Known musl-libc issues
+
+"musl-libc provides no facility for TCP based requests and responses. In the case of certain resolvers, such as AWS’ EC2 local segment DNS, responses longer than a single 512 byte UDP packet - DNS’ archaic standard - get flagged as truncated, and may not contain a single A record."
+
+Source: https://www.linkedin.com/pulse/musl-libc-alpines-greatest-weakness-rogan-lynch/
+
+This limitation of musl-libc is discussed in depth upstream and there has been work from the musl-libc maintainer to support TCP based requests. That code can be found [here](https://git.musl-libc.org/cgit/musl/commit/?id=51d4669fb97782f6a66606da852b5afd49a08001) and should be implemented in musl-libc `1.2.4`.
