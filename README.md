@@ -106,6 +106,20 @@ An FQDN includes all of the labels and subdomains that identify a host's locatio
 Fully qualified domain names are used to uniquely identify hosts and resources on the internet and are essential for performing DNS lookups and resolving domain names to IP addresses. In contrast, a partially qualified domain name (PQDN) or non-fully qualified domain name (NFQDN) does not include all the labels and subdomains needed to specify the exact location of a host in the DNS hierarchy. The DNS resolver may need to append the default domain name or search domains to the PQDN or NFQDN to resolve the domain name to an IP address.
 
 # resolv.conf
+```mermaid
+graph LR
+A((Application)) --> B((DNS Resolver))
+B --> C((resolv.conf))
+C --> D{Has query already been resolved?}
+D -- Yes --> E(Return result to application)
+D -- No --> F((Name server))
+F --> G{Is query in cache?}
+G -- Yes --> H(Return result from cache)
+G -- No --> I(Query name server)
+I --> J{Is response authoritative?}
+J -- Yes --> K(Add response to cache and return result to application)
+J -- No --> L(Add response to cache and return result to application)
+```
 resolv.conf is a configuration file used by the Domain Name System (DNS) resolver in Unix-like operating systems. The file contains the configuration information for the DNS client resolver, including the IP addresses of DNS servers that the resolver should use to resolve domain names to IP addresses.
 
 The file consists of several lines of configuration options, each beginning with a keyword followed by a value. Some of the common configuration options in resolv.conf include:
