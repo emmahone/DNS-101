@@ -98,13 +98,13 @@ The resolv.conf file is an important configuration file for the DNS resolver and
 # ndots
 ```mermaid
 graph TD;
-    A((DNS resolver)) --> B[Lookup "example"]
-    B --> C{Does "example" contain at least ndots dots?}
-    C -->|Yes| D[Use "example" as is]
+    A((DNS resolver)) --> B[Lookup 'hostname']
+    B --> C{Does 'hostname' contain at least ndots dots?}
+    C -->|Yes| D[Consider 'hostname' fully quantified]
     C -->|No| E[Append default domain]
-    E --> F{Does "example" now contain at least ndots dots?}
-    F -->|Yes| G[Use "example" as is]
-    F -->|No| H[Lookup "example" with each search domain]
+    E --> F{Does 'hostname' now contain at least ndots dots?}
+    F -->|Yes| G[Consider 'hostname' as fully quantified]
+    F -->|No| H[Lookup 'hostname' with each search domain appended]
     H --> I[Use the first successful result]
 ```
 "ndots" is a configuration option in the resolv.conf file that specifies the minimum number of dots (.) that must be present in a domain name before the DNS resolver considers it to be a fully qualified domain name. The option is used to control the resolver's behavior when resolving domain names that are not fully qualified.
