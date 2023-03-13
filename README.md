@@ -193,3 +193,35 @@ In the example above, we are entering a domain into a webbrowser on a musl based
 [Source](https://www.linkedin.com/pulse/musl-libc-alpines-greatest-weakness-rogan-lynch/)
 
 This limitation of musl-libc is discussed in depth upstream and there has been work from the musl-libc maintainer to support TCP based requests. That code can be found [here](https://git.musl-libc.org/cgit/musl/commit/?id=51d4669fb97782f6a66606da852b5afd49a08001) and should be implemented in musl-libc `1.2.4`.
+
+# I have disabled IPv6, why do I still see AAAA queries?
+```mermaid
+graph LR;
+    glibc[glibc] -->|Begin DNS query| Query;
+    Query -->|Resolve hostname| GetAddrInfo;
+    GetAddrInfo -->|Concurrent A and AAAA lookups| DNS_Query_A;
+    GetAddrInfo -->|Concurrent A and AAAA lookups| DNS_Query_AAAA;
+    DNS_Query_A -->|Receive A response| Parse_Response_A;
+    DNS_Query_AAAA -->|Receive AAAA response| Parse_Response_AAAA;
+    Parse_Response_A -->|Return A result| Result_A;
+    Parse_Response_AAAA -->|Return AAAA result| Result_AAAA;
+    Result_A -->|End DNS query| End(Respond to client);
+    Result_AAAA -->|End DNS query| End(Respond to client);
+    glibc --> Error;
+    Query --> Error;
+    GetAddrInfo --> Error;
+    DNS_Query_A --> Error;
+    DNS_Query_AAAA --> Error;
+    Parse_Response_A --> Error;
+    Parse_Response_AAAA --> Error;
+    Error -->|End DNS query| End(Respond to client);
+```
+glibc DNS lookups use the GetAddrInfo function to perform DNS resolution. GetAddrInfo is a function provided by the glibc library that maps a hostname and a service name to a set of socket addresses. The function can handle various network protocols such as IPv4 and IPv6, and it supports both numeric and symbolic host and service names.
+
+When an application running on a system that uses glibc makes a DNS query, it typically calls a higher-level function such as gethostbyname or getaddrinfo. These functions then call GetAddrInfo to perform the actual DNS resolution.
+
+GetAddrInfo takes a hostname and a service name as input and returns an array of sockaddr structures, each containing an IP address and a port number. The function can perform both IPv4 and IPv6 lookups, and it can also perform reverse DNS lookups to obtain hostnames from IP addresses.
+
+When GetAddrInfo is called, it first checks if the requested hostname has already been resolved and cached in memory. If the hostname is not cached, GetAddrInfo sends a DNS query to the DNS resolver specified in the system's network configuration. The function queries both the A and AAAA records of the hostname to obtain IPv4 and IPv6 addresses, respectively. The queries are made concurrently, so the function can obtain both A and AAAA records in parallel.
+
+Once the DNS resolver responds with the IP addresses, GetAddrInfo parses the response and stores the resolved addresses in memory for future use. It then returns the array of sockaddr structures containing the IP addresses and port numbers to the calling function.
