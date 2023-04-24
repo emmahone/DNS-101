@@ -16,6 +16,15 @@ There are different types of DNS records, each with a specific function. Some co
 
 DNS records are essential for the proper functioning of the internet and are used by web browsers, email servers, and other network services to locate the servers responsible for hosting a particular domain or service.
 
+# What is a wildcard DNS record?
+A wildcard DNS record is a type of DNS record that allows a domain name to resolve to multiple IP addresses or hostnames. It is a special DNS record that is represented by an asterisk (*) character in the leftmost part of a domain name, such as *.example.com.
+
+When a wildcard DNS record is created, it tells the DNS resolver to match any subdomain name that is not explicitly defined with this record. For example, if there is a wildcard record for *.example.com, a DNS query for any subdomain name such as blog.example.com, shop.example.com, or anything.example.com will be resolved to the same IP address or hostname specified in the wildcard record.
+
+Wildcard DNS records are commonly used in situations where there are multiple subdomains that need to be served from the same IP address or hostname. For example, a website that has many subdomains such as blogs.example.com, forums.example.com, and support.example.com could use a wildcard DNS record to simplify DNS configuration and management.
+
+It is important to note that wildcard DNS records can have security implications if not properly configured. Attackers can use wildcard DNS records to perform subdomain enumeration attacks and exploit vulnerabilities in subdomains that are not explicitly defined. Therefore, it is recommended to use wildcard DNS records only when necessary and to configure them carefully with appropriate security measures in place.
+
 # DNS Responses
 DNS (Domain Name System) responses are the answers provided by a DNS server when a DNS query/lookup is made. When a user types in a domain name in their browser, the browser sends a DNS query to a DNS server to resolve the domain name into an IP address.
 
