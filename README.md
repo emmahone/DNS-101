@@ -248,3 +248,35 @@ GetAddrInfo takes a hostname and a service name as input and returns an array of
 When GetAddrInfo is called, it first checks if the requested hostname has already been resolved and cached in memory. If the hostname is not cached, GetAddrInfo sends a DNS query to the DNS resolver specified in the system's network configuration. The function queries both the A and AAAA records of the hostname to obtain IPv4 and IPv6 addresses, respectively. The queries are made concurrently, so the function can obtain both A and AAAA records in parallel. There are no plans to allow disabling the concurrent A/AAAA lookups in GetAddrInfo in future releases. 
 
 Once the DNS resolver responds with the IP addresses, GetAddrInfo parses the response and stores the resolved addresses in memory for future use. It then returns the array of sockaddr structures containing the IP addresses and port numbers to the calling function.
+
+# What is an SRV record lookup?
+An SRV record lookup is a type of DNS query that is used to discover information about the servers that provide a particular service. The SRV record is a type of DNS record that specifies the hostname and port number of servers that provide a specific service. For example, an SRV record lookup can be used to discover the location of the servers that provide email service for a particular domain.
+
+When an SRV record lookup is performed, the DNS resolver will return a list of servers that provide the requested service, along with their priority, weight, and port number. The priority and weight values are used to determine the order in which the servers should be contacted, and the port number specifies the network port on which the service is provided.
+
+An SRV record has a specific format that includes several fields of information. The format of an SRV record is as follows:
+
+_Service._Proto.Name TTL Class SRV Priority Weight Port Target
+
+Where:
+- `_Service`: the symbolic name of the desired service. For example, "_http" for HTTP service or "_ldap" for LDAP service.
+- `_Proto`: the transport protocol of the desired service, either "_tcp" or "_udp".
+- `Name`: the domain name of the DNS zone to which this record pertains.
+- `TTL`: the time-to-live in seconds for the record.
+- `Class`: the DNS class, typically "IN" for Internet.
+- `Priority`: a relative priority for the service, with lower values indicating higher priority.
+- `Weight`: a relative weight for the service, used to distribute load among multiple servers with the same priority.
+- `Port`: the TCP or UDP port on which the service is offered.
+- `Target`: the hostname of the server that provides the service.
+
+For example, an SRV record for an LDAP service might look like this:
+```yaml
+_ldap._tcp.example.com. 3600 IN SRV 10 5 389 ldap.example.com.
+```
+This record indicates that the LDAP service for the domain example.com is provided by the server ldap.example.com on port 389, with a priority of 10 and a weight of 5.
+
+In Kubernetes, the service layer uses SRV records to provide service discovery and load balancing for services running in a cluster.
+
+When a Kubernetes service is created, a corresponding DNS record is created in the cluster's DNS service for the service. This DNS record is an SRV record that contains the hostname and port number for the service.
+
+When a pod within the cluster needs to communicate with a service, it can use the SRV record to discover the hostname and port number for the service. This is done by performing a DNS lookup for the service name with the appropriate DNS domain suffix.
