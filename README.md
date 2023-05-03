@@ -158,6 +158,12 @@ For example, if the ndots option is set to 2, the DNS resolver will consider a d
 
 The ndots option can be used to prevent the DNS resolver from performing unnecessary domain searches and lookups for non-fully qualified domain names. By setting ndots to a value appropriate for the organization's domain naming conventions, the DNS resolver can more efficiently and accurately resolve domain names to IP addresses.
 
+# Using dig to demonstrate lookup behavior
+You can use `dig` to demonstrate the lookup behavior of a client. In the below command, we are adding the `+search` and `+showsearch` flags so that we can see all of the questions/queries being sent as the domains specified in the client resolv.conf file are appended to the hostname. We also specify `+ndots=5` to explicitly set the ndots value. You can change this parameter to observe the varying behavior with different ndots values. 
+```bash
+$ dig +search +showsearch +ndots=5 testapp.svc.cluster.local
+```
+
 # glibc vs musl-libc
 Both glibc and musl-libc are C libraries used in Linux-based operating systems. The main difference between them when it comes to DNS lookup is the implementation of the DNS resolver.
 
