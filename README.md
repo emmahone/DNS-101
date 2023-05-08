@@ -173,8 +173,6 @@ In musl-libc, on the other hand, the DNS resolver is implemented as a static lib
 
 Overall, the main difference between glibc and musl when it comes to DNS lookup is the caching mechanism. Glibc clients use a caching daemon to speed up subsequent DNS lookups, while musl clients do not cache results and query the DNS server directly each time.
 
-NOTE: Starting in RHEL 9 (and equivalent RHCOS versions based on RHEL 9), nscd was replaced with sssd. THe role of sssd is the same and the flowcharts below do not change. 
-
 # Example glibc client
 ```mermaid
 graph TD;
