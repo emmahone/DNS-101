@@ -314,10 +314,10 @@ A CoreDNS configuration file is typically named Corefile and follows a simple sy
 ```
 Let's break down the different sections and directives in this example:
 
-- The . specifies the zone for which the configuration applies. In this case, it represents the root zone, indicating that this configuration is for all DNS queries.
-- The log directive enables logging, allowing CoreDNS to log its activities.
-- The errors directive ensures that CoreDNS logs any errors that occur during the resolution process.
-- The cache 30 directive configures a cache with a TTL (Time to Live) of 30 seconds. It specifies that CoreDNS should cache DNS responses for subsequent queries, improving performance by reducing the need for external DNS lookups.
-- The forward . 8.8.8.8 9.9.9.9 directive configures CoreDNS to forward any unresolved DNS queries to the specified DNS servers (in this case, 8.8.8.8 and 9.9.9.9). It acts as a fallback for queries that cannot be resolved from the cache.
+- The `.` specifies the zone for which the configuration applies. In this case, it represents the root zone, indicating that this configuration is for all DNS queries.
+- The `log` directive enables logging, allowing CoreDNS to log its activities.
+- The `errors` directive ensures that CoreDNS logs any errors that occur during the resolution process.
+- The `cache 30` directive configures a cache with a TTL (Time to Live) of 30 seconds. It specifies that CoreDNS should cache DNS responses for subsequent queries, improving performance by reducing the need for external DNS lookups.
+- The `forward . 8.8.8.8 9.9.9.9` directive configures CoreDNS to forward any unresolved DNS queries to the specified DNS servers (in this case, `8.8.8.8` and `9.9.9.9`). It acts as a fallback for queries that cannot be resolved from the cache.
 
 This is a basic example, but CoreDNS configuration files can be much more complex and include various plugins and configurations based on specific requirements. The CoreDNS documentation provides detailed information on the available directives and plugin configurations that can be included in the Corefile to customize the behavior and features of CoreDNS.
