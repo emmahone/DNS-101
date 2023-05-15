@@ -286,3 +286,18 @@ In Kubernetes, the service layer uses SRV records to provide service discovery a
 When a Kubernetes service is created, a corresponding DNS record is created in the cluster's DNS service for the service. This DNS record is an SRV record that contains the hostname and port number for the service.
 
 When a pod within the cluster needs to communicate with a service, it can use the SRV record to discover the hostname and port number for the service. This is done by performing a DNS lookup for the service name with the appropriate DNS domain suffix.
+
+# What is coreDNS?
+[CoreDNS](https://github.com/coredns/coredns) is an open-source, flexible, and extensible DNS server and service discovery system. It is designed to be a fast and scalable DNS server that can handle a wide range of DNS-related tasks. CoreDNS is written in the Go programming language and is a Cloud Native Computing Foundation (CNCF) project.
+
+CoreDNS offers a modular architecture that allows users to customize and extend its functionality through plugins. It supports various DNS protocols, including DNS-over-TLS (DoT) and DNS-over-HTTPS (DoH), which provide secure and encrypted communication between clients and the server. It also supports advanced features such as DNS Service Discovery (DNS-SD), which enables automatic discovery of network services using DNS.
+
+One of the key advantages of CoreDNS is its flexibility and plugin-based architecture. Users can choose and enable only the necessary plugins to tailor CoreDNS to their specific requirements. This allows for efficient resource utilization and minimizes the attack surface by only running the necessary functionality.
+
+CoreDNS is widely used in cloud environments, containerized deployments, and microservices architectures. It can be deployed as a standalone DNS server or integrated with container orchestration platforms like Kubernetes. CoreDNS's flexibility, scalability, and support for modern DNS protocols make it a popular choice for organizations seeking a robust and customizable DNS solution.
+
+When CoreDNS is configured as the local DNS caching server, the glibc resolver sends DNS queries to CoreDNS instead of directly contacting the external DNS servers. CoreDNS acts as a proxy, receiving the DNS queries from the glibc resolver, forwarding them to the appropriate external DNS servers, and caching the responses.
+
+The advantage of using CoreDNS as a local DNS caching server for k8/OCP environments is that it can speed up subsequent DNS queries by serving cached responses, reducing the latency associated with contacting external DNS servers and reducing the number of upstream queries. Additionally, CoreDNS's extensible plugin architecture allows for advanced DNS-related functionalities, such as DNS-based service discovery or DNS security features like DNS-over-TLS (DoT) or DNS-over-HTTPS (DoH).
+
+In k8/OCP environments, the glibc resolver and CoreDNS work together to handle DNS resolution. The resolver remains responsible for receiving DNS queries from applications and managing the DNS configuration, while CoreDNS acts as a caching and forwarding server, improving performance and providing additional DNS-related features.
