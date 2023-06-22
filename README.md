@@ -5,23 +5,23 @@ DNS stands for Domain Name System. It is a system used to translate human-readab
 DNS records are pieces of information stored in a domain name system (DNS) server that help to identify and manage various aspects of a domain, such as its web servers, email servers, and other services associated with it. These records provide information about the IP address of the server associated with the domain, the mail server responsible for handling email, and other settings that are necessary for accessing the domain.
 
 There are different types of DNS records, each with a specific function. Some common types of DNS records include:
-- A (Address) record: This response type maps a domain name to an IP address.
-- AAAA (IPv6 Address) record: This response type maps a domain name to an IPv6 address.
-- CNAME (Canonical Name) record: This response type provides an alias for a domain name, allowing multiple domain names to point to the same IP address.
-- MX (Mail Exchange) record: This response type specifies the mail server responsible for handling email for a domain.
-- NS (Name Server) record: This response type specifies the authoritative name servers for a domain.
-- PTR (Pointer) record: This response type maps an IP address to a domain name.
-- SOA (Start of Authority) record: This response type provides information about the DNS zone, including the primary name server for the zone and the email address of the zone administrator.
-- TXT (Text) record: This response type allows arbitrary text to be associated with a domain name.
+- `A (Address) record`: This response type maps a domain name to an IP address.
+- `AAAA (IPv6 Address) record`: This response type maps a domain name to an IPv6 address.
+- `CNAME (Canonical Name) record`: This response type provides an alias for a domain name, allowing multiple domain names to point to the same IP address.
+- `MX (Mail Exchange) record`: This response type specifies the mail server responsible for handling email for a domain.
+- `NS (Name Server) record`: This response type specifies the authoritative name servers for a domain.
+- `PTR (Pointer) record`: This response type maps an IP address to a domain name.
+- `SOA (Start of Authority) record`: This response type provides information about the DNS zone, including the primary name server for the zone and the email address of the zone administrator.
+- `TXT (Text) record`: This response type allows arbitrary text to be associated with a domain name.
 
 DNS records are essential for the proper functioning of the internet and are used by web browsers, email servers, and other network services to locate the servers responsible for hosting a particular domain or service.
 
 # What is a wildcard DNS record?
 A wildcard DNS record is a type of DNS record that allows a domain name to resolve to multiple IP addresses or hostnames. It is a special DNS record that is represented by an asterisk (*) character in the leftmost part of a domain name, such as *.example.com.
 
-When a wildcard DNS record is created, it tells the DNS resolver to match any subdomain name that is not explicitly defined with this record. For example, if there is a wildcard record for *.example.com, a DNS query for any subdomain name such as blog.example.com, shop.example.com, or anything.example.com will be resolved to the same IP address or hostname specified in the wildcard record.
+When a wildcard DNS record is created, it tells the DNS resolver to match any subdomain name that is not explicitly defined with this record. For example, if there is a wildcard record for `*.example.com`, a DNS query for any subdomain name such as `blog.example.com`, `shop.example.com`, or `anything.example.com` will be resolved to the same IP address or hostname specified in the wildcard record.
 
-Wildcard DNS records are commonly used in situations where there are multiple subdomains that need to be served from the same IP address or hostname. For example, a website that has many subdomains such as blogs.example.com, forums.example.com, and support.example.com could use a wildcard DNS record to simplify DNS configuration and management.
+Wildcard DNS records are commonly used in situations where there are multiple subdomains that need to be served from the same IP address or hostname. For example, a website that has many subdomains such as `blogs.example.com`, `forums.example.com`, and `support.example.com` could use a wildcard DNS record to simplify DNS configuration and management.
 
 It is important to note that wildcard DNS records can have security implications if not properly configured. Attackers can use wildcard DNS records to perform subdomain enumeration attacks and exploit vulnerabilities in subdomains that are not explicitly defined. Therefore, it is recommended to use wildcard DNS records only when necessary and to configure them carefully with appropriate security measures in place.
 
@@ -80,11 +80,11 @@ A top-level domain (TLD) is the last segment of a domain name in the hierarchica
 
 There are two main types of TLDs: generic top-level domains (gTLDs) and country-code top-level domains (ccTLDs).
 
-Generic top-level domains (gTLDs) are used globally and include TLDs such as ".com", ".org", ".net", and ".edu". These TLDs are typically used for commercial, non-profit, network infrastructure, and educational purposes, respectively.
+`Generic top-level domains (gTLDs)` are used globally and include TLDs such as ".com", ".org", ".net", and ".edu". These TLDs are typically used for commercial, non-profit, network infrastructure, and educational purposes, respectively.
 
-Country-code top-level domains (ccTLDs) are two-letter domain extensions reserved for countries and territories. Examples include ".us" for the United States, ".uk" for the United Kingdom, ".ca" for Canada, and so on.
+`Country-code top-level domains (ccTLDs)` are two-letter domain extensions reserved for countries and territories. Examples include ".us" for the United States, ".uk" for the United Kingdom, ".ca" for Canada, and so on.
 
-ICANN (Internet Corporation for Assigned Names and Numbers) manages the assignment of TLDs, including the creation of new gTLDs. The TLDs play an important role in identifying and differentiating websites and online services on the internet.
+`ICANN (Internet Corporation for Assigned Names and Numbers)` manages the assignment of TLDs, including the creation of new gTLDs. The TLDs play an important role in identifying and differentiating websites and online services on the internet.
 
 # Root DNS Servers
 A root DNS server is a DNS server that is responsible for answering requests to resolve top-level domains (TLDs) on the internet. The root DNS servers contain the master list of all TLDs, including both generic top-level domains (gTLDs) and country-code top-level domains (ccTLDs).
@@ -133,10 +133,10 @@ resolv.conf is a configuration file used by the Domain Name System (DNS) resolve
 
 The file consists of several lines of configuration options, each beginning with a keyword followed by a value. Some of the common configuration options in resolv.conf include:
 
-- nameserver: Specifies the IP address of a DNS server that the resolver should use to resolve domain names.
-- domain: Specifies the default domain name that should be appended to unqualified domain names.
-- search: Specifies a list of domain names that should be searched in order when resolving unqualified domain names.
-- options: Specifies additional options for the DNS resolver, such as the maximum number of retries and the timeout interval for DNS queries.
+- `nameserver`: Specifies the IP address of a DNS server that the resolver should use to resolve domain names.
+- `domain`: Specifies the default domain name that should be appended to unqualified domain names.
+- `search`: Specifies a list of domain names that should be searched in order when resolving unqualified domain names.
+- `options`: Specifies additional options for the DNS resolver, such as the maximum number of retries and the timeout interval for DNS queries.
 
 The resolv.conf file is an important configuration file for the DNS resolver and can have a significant impact on the performance and reliability of DNS resolution on a system.
 
