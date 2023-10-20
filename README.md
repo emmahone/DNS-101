@@ -321,3 +321,9 @@ Let's break down the different sections and directives in this example:
 - The `forward . 8.8.8.8 9.9.9.9` directive configures CoreDNS to forward any unresolved DNS queries to the specified DNS servers (in this case, `8.8.8.8` and `9.9.9.9`). It acts as a fallback for queries that cannot be resolved from the cache.
 
 This is a basic example, but CoreDNS configuration files can be much more complex and include various plugins and configurations based on specific requirements. The CoreDNS documentation provides detailed information on the available directives and plugin configurations that can be included in the Corefile to customize the behavior and features of CoreDNS.
+
+# Tshark filter to view dns queries and responses
+Below is a filter you can use to view the queries and reponses for `example.com`:
+```bash
+tshark -r <file>.pcap -n  -Y 'dns.qry.name contains "example.com"'
+```
